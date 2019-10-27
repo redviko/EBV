@@ -145,7 +145,14 @@ namespace Lab_Obratnii_EVM_Slonchak
             }
             else
             {
-                j = count1 - 1;
+                if (count1%2!=0)
+                {
+                    j = count1 - 1;
+                }
+                else
+                {
+                    j = count1;
+                }
                 for (i = sbytes1.Length - 1; i >= 0; i--)
                     if (count1 != 0)
                     {
