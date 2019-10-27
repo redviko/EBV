@@ -12,8 +12,16 @@ namespace Lab_Obratnii_EVM_Slonchak
             var sbytes0 = new double[7]; //Для записи 1-го числа в двоичной форме в 7 разрядной сетке
             var sbytes1 = new double[7]; //Для записи 2-го числа в двоичной форме в 7 разрядной сетке
             var sbytesfinal = new double[7]; //Для записи суммы 1-го и 2-го двоичных чисел в 7 разрядной сетке
-            double dec0 = int.Parse(Console.ReadLine()); //Ввод 1-го значения в 10 системе
-            double dec1 = int.Parse(Console.ReadLine()); //Ввод 2-го значения в 10 системе
+            var iscorrect = false;
+            double dec0 = 0;
+            double dec1 = 0;
+            while (!iscorrect)
+            {
+                dec0 = int.Parse(Console.ReadLine()); //Ввод 1-го значения в 10 системе
+                dec1 = int.Parse(Console.ReadLine()); //Ввод 2-го значения в 10 системе
+                if (dec0 < 63 && dec0 > -63 && dec1 < 63 && dec1 > -63) iscorrect = true;
+            }
+
             var decfinal = dec0 + dec1; //Счёт значения в 10 системе
             double
                 sbytestodecfinal =
