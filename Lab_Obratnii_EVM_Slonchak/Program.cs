@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Lab_Obratnii_EVM_Slonchak
 {
@@ -165,6 +166,10 @@ namespace Lab_Obratnii_EVM_Slonchak
                 i >= 0;
                 i--)
             {
+                if (i == 0 && sbytes0[0] == 0 && sbytes1[0] == 0 && temp == 1)
+                {
+                    vihodzarazryad = true;
+                }
                 if (sbytes0[i] == 1 && sbytes1[i] == 1 && forfor == false && temp == 0)
                 {
                     sbytesfinal[i] = (sbytes0[i] + sbytes1[i]) % 2;
@@ -172,6 +177,7 @@ namespace Lab_Obratnii_EVM_Slonchak
                     temp = 1;
                     forfor = true;
                 }
+
                 else if (temp == 1 && !forfor)
                 {
                     forfor = true;
@@ -192,6 +198,8 @@ namespace Lab_Obratnii_EVM_Slonchak
                 {
                     sbytesfinal[i] = (sbytes0[i] + sbytes1[i]) % 2;
                 }
+   
+               
 
                 forfor = false;
             }
