@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Eventing.Reader;
 
 namespace Lab_Obratnii_EVM_Slonchak
 {
@@ -45,13 +44,12 @@ namespace Lab_Obratnii_EVM_Slonchak
                 isnegative0 = true;
                 sbytes0[0] = 1;
             }
-            else if (dec0==-64)
+            else if (dec0 == -64)
             {
                 dec0 = Math.Abs(dec0);
                 isnegative0 = true;
                 sbytes0[0] = 1;
             }
-
 
             if (dec1 < 0)
             {
@@ -59,12 +57,13 @@ namespace Lab_Obratnii_EVM_Slonchak
                 isnegative1 = true;
                 sbytes1[0] = 1;
             }
-            else if (dec1==64)
+            else if (dec1 == 64)
             {
                 dec1 = Math.Abs(dec1);
                 isnegative1 = true;
                 sbytes1[0] = 1;
             }
+
             //for (; Math.Truncate(parsed) > 0; parsed /= 15) decimtemp.Add(parsed % 15);
             for (i = 0; //Процесс перевода 1-го числа в двоичное, путём записывание остатков от деления в List
                 Math.Truncate(dec0) > 0;
@@ -166,10 +165,7 @@ namespace Lab_Obratnii_EVM_Slonchak
                 i >= 0;
                 i--)
             {
-                if (i == 0 && sbytes0[0] == 0 && sbytes1[0] == 0 && temp == 1)
-                {
-                    vihodzarazryad = true;
-                }
+                if (i == 0 && sbytes0[0] == 0 && sbytes1[0] == 0 && temp == 1) vihodzarazryad = true;
                 if (sbytes0[i] == 1 && sbytes1[i] == 1 && forfor == false && temp == 0)
                 {
                     sbytesfinal[i] = (sbytes0[i] + sbytes1[i]) % 2;
@@ -177,7 +173,6 @@ namespace Lab_Obratnii_EVM_Slonchak
                     temp = 1;
                     forfor = true;
                 }
-
                 else if (temp == 1 && !forfor)
                 {
                     forfor = true;
@@ -198,13 +193,11 @@ namespace Lab_Obratnii_EVM_Slonchak
                 {
                     sbytesfinal[i] = (sbytes0[i] + sbytes1[i]) % 2;
                 }
-   
-               
 
                 forfor = false;
             }
 
-            if (temp > 0/*||count0!=sbytesfinal[0]*/) //Циклический перенос в случае выхода за разрядную сетку
+            if (temp > 0 /*||count0!=sbytesfinal[0]*/) //Циклический перенос в случае выхода за разрядную сетку
             {
                 vihodzarazryad = true;
                 for (i = sbytesfinal.Length - 1; i >= 0; i--)
@@ -237,14 +230,12 @@ namespace Lab_Obratnii_EVM_Slonchak
             temp = sbytesfinal.Length - 1;
             if (sbytesfinal[0] == 0)
             {
-                for (i = 0; i < sbytesfinal.Length; i++)
-                    sbytestodecfinal += sbytesfinal[i] * Math.Pow(2, temp--);
+                for (i = 0; i < sbytesfinal.Length; i++) sbytestodecfinal += sbytesfinal[i] * Math.Pow(2, temp--);
             } //Перевод из 2 в 10 с проверкой на знак
             else
             {
                 for (i = sbytesfinal.Length - 1; i >= 0; i--) sbytesfinal[i] = (sbytesfinal[i] + 1) % 2;
-                for (i = 0; i < sbytesfinal.Length; i++)
-                    sbytestodecfinal += sbytesfinal[i] * Math.Pow(2, temp--);
+                for (i = 0; i < sbytesfinal.Length; i++) sbytestodecfinal += sbytesfinal[i] * Math.Pow(2, temp--);
             }
 
             Console.WriteLine("\nИз обратного кода в 10 систему счисления:" + " " + sbytestodecfinal);
