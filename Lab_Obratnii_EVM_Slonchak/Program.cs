@@ -12,14 +12,15 @@ namespace Lab_Obratnii_EVM_Slonchak
             var sbytes0 = new double[7]; //Для записи 1-го числа в двоичной форме в 7 разрядной сетке
             var sbytes1 = new double[7]; //Для записи 2-го числа в двоичной форме в 7 разрядной сетке
             var sbytesfinal = new double[7]; //Для записи суммы 1-го и 2-го двоичных чисел в 7 разрядной сетке
-            var iscorrect = false;
+            //var isoversized = true;
+            var vihodzarazryad = true; //Флаг для выхода за разрядную сетку
             double dec0 = 0;
             double dec1 = 0;
-            while (!iscorrect)
+            while (vihodzarazryad)
             {
                 dec0 = int.Parse(Console.ReadLine()); //Ввод 1-го значения в 10 системе
                 dec1 = int.Parse(Console.ReadLine()); //Ввод 2-го значения в 10 системе
-                if (dec0 < 63 && dec0 > -63 && dec1 < 63 && dec1 > -63) iscorrect = true;
+                if (dec0 < 64 && dec0 > -65 && dec1 < 64 && dec1 > -65) vihodzarazryad = false;
             }
 
             var decfinal = dec0 + dec1; //Счёт значения в 10 системе
@@ -33,10 +34,9 @@ namespace Lab_Obratnii_EVM_Slonchak
             var isnegative0 = false; //Флаг знаковый для 1 числа
             var isnegative1 = false; //Флаг знаковый для 2 числа
             var razryad = false; //Флаг для переноса в старший разряд
-            var vihodzarazryad = false; //Флаг для выхода за разрядную сетку
+            //var vihodzarazryad = false; //Флаг для выхода за разрядную сетку
             var isreversed = false; //Флаг для реверса массива с остатками от деления
             var iseven = false;
-            var isoversized = false;
             var forfor = false; //Флаг для цикла сложения 2 чисел
             if (dec0 < 0)
             {
@@ -109,7 +109,7 @@ namespace Lab_Obratnii_EVM_Slonchak
                     }
             }
 
-            if (count0 > 0) isoversized = true;
+            if (count0 > 0) vihodzarazryad = true;
             if (!isnegative1
             ) //запись двоичного кода 2-го числа в массив, с проверкой было ли оно изначально отрицательным или нет.
             {
@@ -137,7 +137,7 @@ namespace Lab_Obratnii_EVM_Slonchak
                 for (i = sbytes1.Length - 1; i >= 0; i--)
                     if (count1 != 0)
                     {
-                        sbytes1[i] = (list[j--] + 1) % 2;
+                        sbytes1[i] = (list[j++] + 1) % 2;
                         count1--;
                     }
                     else
@@ -146,8 +146,9 @@ namespace Lab_Obratnii_EVM_Slonchak
                     }
             }
 
-            if (count1 > 0) isoversized = true;
+            if (count1 > 0) vihodzarazryad = true;
             temp = 0;
+            count0 = Int32.Parse(sbytesfinal[0].ToString());
             for (i = sbytesfinal.Length - 1; //Сложение двоичных чисел с обратным кодом.
                 i >= 0;
                 i--)
@@ -183,7 +184,7 @@ namespace Lab_Obratnii_EVM_Slonchak
                 forfor = false;
             }
 
-            if (temp > 0) //Циклический перенос в случае выхода за разрядную сетку
+            if (temp > 0||count0!=sbytesfinal[0]) //Циклический перенос в случае выхода за разрядную сетку
             {
                 vihodzarazryad = true;
                 for (i = sbytesfinal.Length - 1; i >= 0; i--)
@@ -217,13 +218,13 @@ namespace Lab_Obratnii_EVM_Slonchak
             if (sbytesfinal[0] == 0)
             {
                 for (i = 0; i < sbytesfinal.Length; i++)
-                    sbytestodecfinal = sbytestodecfinal + sbytesfinal[i] * Math.Pow(2, temp--);
+                    sbytestodecfinal += sbytesfinal[i] * Math.Pow(2, temp--);
             } //Перевод из 2 в 10 с проверкой на знак
             else
             {
                 for (i = sbytesfinal.Length - 1; i >= 0; i--) sbytesfinal[i] = (sbytesfinal[i] + 1) % 2;
                 for (i = 0; i < sbytesfinal.Length; i++)
-                    sbytestodecfinal = sbytestodecfinal + sbytesfinal[i] * Math.Pow(2, temp--);
+                    sbytestodecfinal += sbytesfinal[i] * Math.Pow(2, temp--);
             }
 
             Console.WriteLine("\nИз обратного кода в 10 систему счисления:" + " " + sbytestodecfinal);
@@ -236,8 +237,8 @@ namespace Lab_Obratnii_EVM_Slonchak
             else Console.WriteLine("Переносов нет");
             if (vihodzarazryad) Console.WriteLine("Есть выход за разрядную сетку");
             else Console.WriteLine("Выхода за разрядную сетку нет");
-            if (isoversized) Console.WriteLine("Не хватает размера разрядной сетки для записи числа");
-            else Console.WriteLine("Для записи хватает разрядной сетки, не учитывая знаковый бит");
+            //if (vihodzarazryad) Console.WriteLine("Не хватает размера разрядной сетки для записи числа");
+            //else Console.WriteLine("Для записи хватает разрядной сетки, не учитывая знаковый бит");
             Console.ReadKey(true);
         }
     }
