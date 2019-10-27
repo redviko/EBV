@@ -44,6 +44,13 @@ namespace Lab_Obratnii_EVM_Slonchak
                 isnegative0 = true;
                 sbytes0[0] = 1;
             }
+            else if (dec0==-64)
+            {
+                dec0 = Math.Abs(dec0);
+                isnegative0 = true;
+                sbytes0[0] = 1;
+            }
+
 
             if (dec1 < 0)
             {
@@ -51,7 +58,12 @@ namespace Lab_Obratnii_EVM_Slonchak
                 isnegative1 = true;
                 sbytes1[0] = 1;
             }
-
+            else if (dec1==64)
+            {
+                dec1 = Math.Abs(dec1);
+                isnegative1 = true;
+                sbytes1[0] = 1;
+            }
             //for (; Math.Truncate(parsed) > 0; parsed /= 15) decimtemp.Add(parsed % 15);
             for (i = 0; //Процесс перевода 1-го числа в двоичное, путём записывание остатков от деления в List
                 Math.Truncate(dec0) > 0;
@@ -148,7 +160,7 @@ namespace Lab_Obratnii_EVM_Slonchak
 
             if (count1 > 0) vihodzarazryad = true;
             temp = 0;
-            count0 = Int32.Parse(sbytesfinal[0].ToString());
+            //count0 = Int32.Parse(sbytesfinal[0].ToString());
             for (i = sbytesfinal.Length - 1; //Сложение двоичных чисел с обратным кодом.
                 i >= 0;
                 i--)
@@ -184,7 +196,7 @@ namespace Lab_Obratnii_EVM_Slonchak
                 forfor = false;
             }
 
-            if (temp > 0||count0!=sbytesfinal[0]) //Циклический перенос в случае выхода за разрядную сетку
+            if (temp > 0/*||count0!=sbytesfinal[0]*/) //Циклический перенос в случае выхода за разрядную сетку
             {
                 vihodzarazryad = true;
                 for (i = sbytesfinal.Length - 1; i >= 0; i--)
