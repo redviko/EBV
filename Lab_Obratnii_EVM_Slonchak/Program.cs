@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Versioning;
 
 namespace Lab_Obratnii_EVM_Slonchak
 {
@@ -223,8 +224,35 @@ namespace Lab_Obratnii_EVM_Slonchak
                     //sbytesfinal[i] = (sbytesfinal[i] + 1)%2;
                 }
             }
+            temp = sbytesfinal.Length - 1;
+            if (sbytesfinal[0] == 0)
+            {
+                for (i = 0; i < sbytesfinal.Length; i++) sbytestodecfinal += sbytesfinal[i] * Math.Pow(2, temp--);
+                if (Math.Abs(decfinal)>64)
+                {
+                    vihodzarazryad = true;
+                }
+                else
+                {
+                    vihodzarazryad = false;
+                }
+            } 
+            else
+            {
+                for (i = sbytesfinal.Length - 2; i >= 0; i--) sbytesfinal[i] = (sbytesfinal[i] + 1) % 2;
+                for (i = 0; i < sbytesfinal.Length; i++) sbytestodecfinal += sbytesfinal[i] * Math.Pow(2, temp--);
+                if (Math.Abs(decfinal)>64)
+                {
+                    vihodzarazryad = true;
+                }
+                else
+                {
+                    vihodzarazryad = false;
+                }
 
-            //count0 = 0;
+            }
+
+
             count1 = 0;
             foreach (var d in sbytesfinal)
                 if (d == 1)
@@ -234,19 +262,9 @@ namespace Lab_Obratnii_EVM_Slonchak
             Console.Write("Обратный код:");
             foreach (var @double in sbytesfinal) //Вывод получившегося обратного кода
                 Console.Write(@double);
-            temp = sbytesfinal.Length - 1;
-            if (sbytesfinal[0] == 0)
-            {
-                for (i = 0; i < sbytesfinal.Length; i++) sbytestodecfinal += sbytesfinal[i] * Math.Pow(2, temp--);
-            } //Перевод из 2 в 10 с проверкой на знак
-            else
-            {
-                for (i = sbytesfinal.Length - 1; i >= 0; i--) sbytesfinal[i] = (sbytesfinal[i] + 1) % 2;
-                for (i = 0; i < sbytesfinal.Length; i++) sbytestodecfinal += sbytesfinal[i] * Math.Pow(2, temp--);
-            }
-
-            Console.WriteLine("\nИз обратного кода в 10 систему счисления:" + " " + sbytestodecfinal);
-            Console.WriteLine("Результат сложения в 10 изначально" + " " + decfinal);
+          
+            //Console.WriteLine("\nИз обратного кода в 10 систему счисления:" + " " + sbytestodecfinal);
+            Console.WriteLine("\nРезультат сложения в 10 изначально" + " " + decfinal);
             if (iseven) Console.WriteLine("Результат двоичной чётности:Чётное");
             else Console.WriteLine("Результат двоичной чётности:Нечётное");
             if (sbytesfinal[0] == 0) Console.WriteLine("Результат по знаковому биту положительный");
